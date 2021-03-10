@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base Theme. -->
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Theme -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/white</item>
-    </style>    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@attr/colorPrimary</item>
+        <item name="colorPrimaryDark">@attr/colorPrimaryDark</item>
+        <item name="colorAccent">@attr/colorAccent</item>
+    </style>
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#122259</item>
         <item name="colorPrimaryDark">#122259</item>
-        <item name="colorAccent">@color/purple_200</item>
+        <item name="colorAccent">#122259</item>
         <item name="android:textColor">#FFFFFF</item>
-    </style></resources>
+    </style>
+</resources>
