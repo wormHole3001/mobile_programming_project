@@ -1,14 +1,15 @@
 package com.example.mobileprogrammingproject
 
 import android.content.pm.PackageManager
-import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
+import android.location.Geocoder
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,9 +34,15 @@ class MainActivity : AppCompatActivity() {
         val tv1: TextView = findViewById(R.id.textView1)
         task.addOnSuccessListener {
             if (it != null) {
-                val tv1: TextView = findViewById(R.id.textView1)
-                tv1.text = "${it.latitude} -- ${it.longitude}"
-                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+
+                // TEST CITY
+                val geo = Geocoder(this, Locale.getDefault())
+                val addresses = geo.getFromLocation(it.latitude,it.longitude,1)
+                val locality = addresses[0].locality
+
+                val cityName: TextView = findViewById(R.id.textView1)
+                cityName.text = locality
+                //Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
             }
         }
     }
