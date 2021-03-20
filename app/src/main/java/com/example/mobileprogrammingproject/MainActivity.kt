@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
          */
         val task = fusedLocationProviderClient.lastLocation
         val cityName: TextView = findViewById(R.id.textView1)
+
         /* Self check for permissions. This will prompt the user to allow location access to the phone */
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
