@@ -71,13 +71,12 @@ class MainActivity : AppCompatActivity() {
                 val arr = obj.getJSONArray("data")
                 /* Get JSON data from index 0 */
                 val obj2 = arr.getJSONObject(0)
+                /* Convert celsius to fahrenheit */
+                val fahrenheit = obj2.getString("temp")
+                val temperature = (fahrenheit.toFloat() * (9.0/5.0) + 32.0).toInt().toString()
                 /* Show the user useful information by making changes to the UI */
-                currentTemp.text = obj2.getString("temp")
+                currentTemp.text = temperature
                 cityName.text = obj2.getString("city_name")
-                /*
-                 * TODO: Convert celsius to fahrenheit for easier readability in the US.
-                 * TODO: Add more useful information related to weather to the user.
-                 */
             },
             // In case of any error
             { currentTemp.text = "Something Went Wrong" })
