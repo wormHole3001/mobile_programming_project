@@ -1,6 +1,5 @@
 package com.example.mobileprogrammingproject
 
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -20,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     private var weatherApi = ApiConstant.WEATHER_API
     private lateinit var currentTemp: TextView
     private lateinit var cityName: TextView
+    private lateinit var dayDescription: TextView
+    private lateinit var sunriseTime: TextView
+    private lateinit var sunsetTime: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         /* Link cityName; Will be used to display the current city name */
         currentTemp = findViewById(R.id.textView)
         cityName = findViewById(R.id.textView1)
+        dayDescription = findViewById(R.id.day_description)
+        sunriseTime = findViewById(R.id.textView2)
+        sunsetTime = findViewById(R.id.textView3)
         /* Create an instance of the fused location provider */
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         obtainLocation()
@@ -75,8 +80,12 @@ class MainActivity : AppCompatActivity() {
                 val fahrenheit = obj2.getString("temp")
                 val temperature = (fahrenheit.toFloat() * (9.0/5.0) + 32.0).toInt().toString()
                 /* Show the user useful information by making changes to the UI */
-                currentTemp.text = temperature
+                currentTemp.text = "$temperature°"
                 cityName.text = obj2.getString("city_name")
+                dayDescription.text = obj.getJSONArray("data").getJSONObject(0).getJSONObject("weather").getString("description")
+                sunriseTime.text = obj2.getString("sunrise")
+                sunsetTime.text = obj2.getString("sunset")
+
             },
             // In case of any error
             { currentTemp.text = "Something Went Wrong" })

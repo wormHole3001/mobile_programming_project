@@ -3,4 +3,9 @@
     <string name="cityName">Welcome!</string>
     <string name="get_location_button">Get Location</string>
     <string name="temp">temp</string>
+    <string name="day" />
+    <string name="sunrise">sunrise</string>
+    <string name="sunset">sunset</string>
+    <string name="sunset_time">--</string>
+    <string name="sunrise_time">--</string>
 </resources>
