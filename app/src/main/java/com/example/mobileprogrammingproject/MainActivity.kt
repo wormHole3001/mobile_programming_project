@@ -1,5 +1,8 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.example.mobileprogrammingproject
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -12,6 +15,8 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 getTemp()
             }
     }
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun getTemp() {
         /*
          * getTemp() will create an API request and parse the returning JSON data.
@@ -79,18 +85,44 @@ class MainActivity : AppCompatActivity() {
                 /* Convert celsius to fahrenheit */
                 val fahrenheit = obj2.getString("temp")
                 val temperature = (fahrenheit.toFloat() * (9.0/5.0) + 32.0).toInt().toString()
+                /* Get UTC time for sunrise and sunset */
+                val utcTimeSunrise = obj2.getString("sunrise")
+                val utcTimeSunset = obj2.getString("sunset")
+                val simpleDate = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = simpleDate.format(Date())
+                val dateTimeSunrise = "$currentDate $utcTimeSunrise"
+                val dateTimeSunset = "$currentDate $utcTimeSunset"
                 /* Show the user useful information by making changes to the UI */
                 currentTemp.text = "$temperature°"
                 cityName.text = obj2.getString("city_name")
                 dayDescription.text = obj.getJSONArray("data").getJSONObject(0).getJSONObject("weather").getString("description")
-                sunriseTime.text = obj2.getString("sunrise")
-                sunsetTime.text = obj2.getString("sunset")
-
+                sunriseTime.text = dateTimeSunrise.toDate().formatTo("hh:mm a")
+                sunsetTime.text = dateTimeSunset.toDate().formatTo("hh:mm a")
             },
             // In case of any error
             { currentTemp.text = "Something Went Wrong" })
         queue.add(stringReq)
     }
+
+    private fun String.toDate(dateFormat: String = "yyyy-MM-dd HH:mm", timeZone: TimeZone = TimeZone.getTimeZone("UTC")): Date {
+        /*
+         * Function is used to format date for UTC to the local timezone
+         */
+        val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
+        parser.timeZone = timeZone
+        return parser.parse(this)
+    }
+
+    private fun Date.formatTo(dateFormat: String, timeZone: TimeZone = TimeZone.getDefault()): String {
+        /*
+         * Function is used to format a timestamp to only show HH:mm this is used to showcase the
+         * sunrise and sunset
+         */
+        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
+        formatter.timeZone = timeZone
+        return formatter.format(this)
+    }
+
 
     /* Weather API Object */
     object ApiConstant{
