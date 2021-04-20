@@ -20,7 +20,8 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var weatherApiUrl = ""
+    private lateinit var weatherApiUrl: String
+    private lateinit var weeklyApiUrl: String
     private var weatherApi = ApiConstant.WEATHER_API
     private lateinit var currentTemp: TextView
     private lateinit var cityName: TextView
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { location: Location? ->
                 /* Create and api call string using longitude, latitude, and our provided api key */
                 weatherApiUrl = "https://api.weatherbit.io/v2.0/current?" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
+                weeklyApiUrl = "http://api.weatherbit.io/v2.0/forecast/daily?" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
                 getTemp()
             }
     }
@@ -72,9 +74,10 @@ class MainActivity : AppCompatActivity() {
         /* Init the RequestQueue */
         val queue = Volley.newRequestQueue(this)
         val url: String = weatherApiUrl
+        val weeklyUrl: String = weeklyApiUrl
         
         /* Create request response */
-        val stringReq = StringRequest(Request.Method.GET, url,
+        val currentWeather = StringRequest(Request.Method.GET, url,
             { response ->
                 /* Create JSON Object */
                 val obj = JSONObject(response)
@@ -92,16 +95,30 @@ class MainActivity : AppCompatActivity() {
                 val currentDate = simpleDate.format(Date())
                 val dateTimeSunrise = "$currentDate $utcTimeSunrise"
                 val dateTimeSunset = "$currentDate $utcTimeSunset"
-                /* Show the user useful information by making changes to the UI */
+                /* Show the user information by making changes to the UI */
                 currentTemp.text = "$temperature°"
                 cityName.text = obj2.getString("city_name")
                 dayDescription.text = obj.getJSONArray("data").getJSONObject(0).getJSONObject("weather").getString("description")
                 sunriseTime.text = dateTimeSunrise.toDate().formatTo("hh:mm a")
                 sunsetTime.text = dateTimeSunset.toDate().formatTo("hh:mm a")
-            },
-            // In case of any error
-            { currentTemp.text = "Something Went Wrong" })
-        queue.add(stringReq)
+            }
+        )
+        /* In case of error */
+        { println("Something might have gone wrong....") }
+
+        /* Weekly Forecast */
+        val weeklyForecast = StringRequest(Request.Method.GET, weeklyUrl,
+                { response ->
+                    /* TODO: Parse JSON weekly forecast */
+                    val obj = JSONObject(response)
+                    /* TODO: Update UI */
+                }
+        )
+        /* In case of error */
+        { println("Something might have gone wrong.....") }
+
+        queue.add(currentWeather)
+        queue.add(weeklyForecast)
     }
 
     private fun String.toDate(dateFormat: String = "yyyy-MM-dd HH:mm", timeZone: TimeZone = TimeZone.getTimeZone("UTC")): Date {
