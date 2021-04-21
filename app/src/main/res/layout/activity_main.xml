@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/cityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.135" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/dayTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/temp"
@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.239" />
 
     <TextView
-        android:id="@+id/day_description"
+        android:id="@+id/dayDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/day"
@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="0.188" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/sunriseIcon"
         android:layout_width="58dp"
         android:layout_height="54dp"
         android:contentDescription="@string/sunrise"
@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/sunrise" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/sunsetIcon"
         android:layout_width="58dp"
         android:layout_height="54dp"
         android:contentDescription="@string/sunset"
@@ -72,7 +72,7 @@
         app:srcCompat="@drawable/sunset" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/sunriseTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sunrise_time"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/sunsetTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sunset_time"
@@ -94,6 +94,129 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TableLayout
+        android:id="@+id/weeklyForecast"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384">
+
+        <TableRow
+            android:id="@+id/dateForecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dayNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/now" />
+
+            <TextView
+                android:id="@+id/dayTwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayTwoText" />
+
+            <TextView
+                android:id="@+id/dayThree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayThreeText" />
+
+            <TextView
+                android:id="@+id/dayFour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayFourText" />
+
+            <TextView
+                android:id="@+id/dayFive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayFiveText" />
+
+            <TextView
+                android:id="@+id/daySix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/daySixText" />
+
+            <TextView
+                android:id="@+id/daySeven"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/daySevenText" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dateTempForecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nowTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nowTempText" />
+
+            <TextView
+                android:id="@+id/dayTwoTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayTwoTempText" />
+
+            <TextView
+                android:id="@+id/dayThreeTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayThreeTempText" />
+
+            <TextView
+                android:id="@+id/dayFourTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayFourTempText" />
+
+            <TextView
+                android:id="@+id/dayFiveTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dayFiveTempText" />
+
+            <TextView
+                android:id="@+id/daySixTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/daySixTempText" />
+
+            <TextView
+                android:id="@+id/daySevenTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/daySevenTempText" />
+        </TableRow>
+
+    </TableLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

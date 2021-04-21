@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,7 +22,6 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var weatherApiUrl: String
     private lateinit var weeklyApiUrl: String
     private var weatherApi = ApiConstant.WEATHER_API
     private lateinit var currentTemp: TextView
@@ -29,17 +29,45 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dayDescription: TextView
     private lateinit var sunriseTime: TextView
     private lateinit var sunsetTime: TextView
+    private lateinit var dateTwo: TextView
+    private lateinit var dateThree: TextView
+    private lateinit var dateFour: TextView
+    private lateinit var dateFive: TextView
+    private lateinit var dateSix: TextView
+    private lateinit var dateSeven: TextView
+    private lateinit var dayOneTemp: TextView
+    private lateinit var dayTwoTemp: TextView
+    private lateinit var dayThreeTemp: TextView
+    private lateinit var dayFourTemp: TextView
+    private lateinit var dayFiveTemp: TextView
+    private lateinit var daySixTemp: TextView
+    private lateinit var daySevenTemp: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         /* Link currentTemp; Will be used to display the temperature */
         /* Link cityName; Will be used to display the current city name */
-        currentTemp = findViewById(R.id.textView)
-        cityName = findViewById(R.id.textView1)
-        dayDescription = findViewById(R.id.day_description)
-        sunriseTime = findViewById(R.id.textView2)
-        sunsetTime = findViewById(R.id.textView3)
+        currentTemp = findViewById(R.id.dayTemp)
+        cityName = findViewById(R.id.cityName)
+        dayDescription = findViewById(R.id.dayDescription)
+        sunriseTime = findViewById(R.id.sunriseTime)
+        sunsetTime = findViewById(R.id.sunsetTime)
+        /* Links to day forecast text view */
+        dateTwo = findViewById(R.id.dayTwo)
+        dateThree = findViewById(R.id.dayThree)
+        dateFour = findViewById(R.id.dayFour)
+        dateFive = findViewById(R.id.dayFive)
+        dateSix = findViewById(R.id.daySix)
+        dateSeven = findViewById(R.id.daySeven)
+        /* Links to temperature for the seven day forecast text views */
+        dayOneTemp = findViewById(R.id.nowTemp)
+        dayTwoTemp = findViewById(R.id.dayTwoTemp)
+        dayThreeTemp = findViewById(R.id.dayThreeTemp)
+        dayFourTemp = findViewById(R.id.dayFourTemp)
+        dayFiveTemp = findViewById(R.id.dayFiveTemp)
+        daySixTemp = findViewById(R.id.daySixTemp)
+        daySevenTemp = findViewById(R.id.daySevenTemp)
         /* Create an instance of the fused location provider */
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         obtainLocation()
@@ -59,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 /* Create and api call string using longitude, latitude, and our provided api key */
-                weatherApiUrl = "https://api.weatherbit.io/v2.0/current?" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
                 weeklyApiUrl = "https://api.weatherbit.io/v2.0/forecast/daily?units=I&" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
                 getTemp()
             }
@@ -74,7 +101,6 @@ class MainActivity : AppCompatActivity() {
 
         /* Init the RequestQueue */
         val queue = Volley.newRequestQueue(this)
-        val url: String = weatherApiUrl
         val weeklyUrl: String = weeklyApiUrl
 
         /* Weekly Forecast */
@@ -93,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                     val dayFiveData = dataArray.getJSONObject(4)
                     val daySixData = dataArray.getJSONObject(5)
                     val daySevenData = dataArray.getJSONObject(6)
-                    /* Get the temperature for the day */
+                    /* Get the temperature for day 1 to 7 */
                     val dayOneFahrenheit = dayOneData.getString("temp")
                     val dayTwoFahrenheit = dayTwoData.getString("temp")
                     val dayThreeFahrenheit = dayThreeData.getString("temp")
@@ -106,6 +132,22 @@ class MainActivity : AppCompatActivity() {
                     val utcTimeSunset = dayOneData.getString("sunset_ts")
                     val sunrise = getSunTime(utcTimeSunrise)
                     val sunset = getSunTime(utcTimeSunset)
+                    /* Get and set the days for the weekly forecast */
+                    val currentDay = SimpleDateFormat("dd")
+                    dateTwo.text = (currentDay.format(Date()).toInt() + 1).toString()
+                    dateThree.text = (currentDay.format(Date()).toInt() + 2).toString()
+                    dateFour.text = (currentDay.format(Date()).toInt() + 3).toString()
+                    dateFive.text = (currentDay.format(Date()).toInt() + 4).toString()
+                    dateSix.text = (currentDay.format(Date()).toInt() + 5).toString()
+                    dateSeven.text = (currentDay.format(Date()).toInt() + 6).toString()
+                    /* Set the temperature for the day of the week */
+                    dayOneTemp.text = "$dayOneFahrenheit°"
+                    dayTwoTemp.text = "$dayTwoFahrenheit°"
+                    dayThreeTemp.text = "$dayThreeFahrenheit°"
+                    dayFourTemp.text = "$dayFourFahrenheit°"
+                    dayFiveTemp.text = "$dayFiveFahrenheit°"
+                    daySixTemp.text = "$daySixFahrenheit°"
+                    daySevenTemp.text = "$daySevenFahrenheit°"
                     /* Show the user information by making changes to the UI */
                     sunriseTime.text = sunrise
                     sunsetTime.text = sunset
