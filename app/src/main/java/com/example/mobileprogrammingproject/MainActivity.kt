@@ -15,6 +15,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { location: Location? ->
                 /* Create and api call string using longitude, latitude, and our provided api key */
                 weatherApiUrl = "https://api.weatherbit.io/v2.0/current?" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
-                weeklyApiUrl = "http://api.weatherbit.io/v2.0/forecast/daily?" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
+                weeklyApiUrl = "https://api.weatherbit.io/v2.0/forecast/daily?units=I&" + "lat=" + location?.latitude + "&lon=" + location?.longitude + "&key=" + weatherApi
                 getTemp()
             }
     }
@@ -75,69 +76,64 @@ class MainActivity : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val url: String = weatherApiUrl
         val weeklyUrl: String = weeklyApiUrl
-        
-        /* Create request response */
-        val currentWeather = StringRequest(Request.Method.GET, url,
-            { response ->
-                /* Create JSON Object */
-                val obj = JSONObject(response)
-                /* Get 'data' from JSON object */
-                val arr = obj.getJSONArray("data")
-                /* Get JSON data from index 0 */
-                val obj2 = arr.getJSONObject(0)
-                /* Convert celsius to fahrenheit */
-                val fahrenheit = obj2.getString("temp")
-                val temperature = (fahrenheit.toFloat() * (9.0/5.0) + 32.0).toInt().toString()
-                /* Get UTC time for sunrise and sunset */
-                val utcTimeSunrise = obj2.getString("sunrise")
-                val utcTimeSunset = obj2.getString("sunset")
-                val simpleDate = SimpleDateFormat("yyyy-MM-dd")
-                val currentDate = simpleDate.format(Date())
-                val dateTimeSunrise = "$currentDate $utcTimeSunrise"
-                val dateTimeSunset = "$currentDate $utcTimeSunset"
-                /* Show the user information by making changes to the UI */
-                currentTemp.text = "$temperature°"
-                cityName.text = obj2.getString("city_name")
-                dayDescription.text = obj.getJSONArray("data").getJSONObject(0).getJSONObject("weather").getString("description")
-                sunriseTime.text = dateTimeSunrise.toDate().formatTo("hh:mm a")
-                sunsetTime.text = dateTimeSunset.toDate().formatTo("hh:mm a")
-            }
-        )
-        /* In case of error */
-        { println("Something might have gone wrong....") }
 
         /* Weekly Forecast */
         val weeklyForecast = StringRequest(Request.Method.GET, weeklyUrl,
                 { response ->
-                    /* TODO: Parse JSON weekly forecast */
-                    val obj = JSONObject(response)
-                    /* TODO: Update UI */
+                    /* TODO: Implement the weekly forecast */
+                    /* Create JSON Object */
+                    val apiObject = JSONObject(response)
+                    /* Get 'data' from JSON object */
+                    val dataArray = apiObject.getJSONArray("data")
+                    /* Parse array create JSON objects for the next 7 days */
+                    val dayOneData = dataArray.getJSONObject(0)
+                    val dayTwoData = dataArray.getJSONObject(1)
+                    val dayThreeData = dataArray.getJSONObject(2)
+                    val dayFourData = dataArray.getJSONObject(3)
+                    val dayFiveData = dataArray.getJSONObject(4)
+                    val daySixData = dataArray.getJSONObject(5)
+                    val daySevenData = dataArray.getJSONObject(6)
+                    /* Get the temperature for the day */
+                    val dayOneFahrenheit = dayOneData.getString("temp")
+                    val dayTwoFahrenheit = dayTwoData.getString("temp")
+                    val dayThreeFahrenheit = dayThreeData.getString("temp")
+                    val dayFourFahrenheit = dayFourData.getString("temp")
+                    val dayFiveFahrenheit = dayFiveData.getString("temp")
+                    val daySixFahrenheit = daySixData.getString("temp")
+                    val daySevenFahrenheit = daySevenData.getString("temp")
+                    /* Parse JSON for the sunrise and sunset for the current date */
+                    val utcTimeSunrise = dayOneData.getString("sunrise_ts")
+                    val utcTimeSunset = dayOneData.getString("sunset_ts")
+                    val sunrise = getSunTime(utcTimeSunrise)
+                    val sunset = getSunTime(utcTimeSunset)
+                    /* Show the user information by making changes to the UI */
+                    sunriseTime.text = sunrise
+                    sunsetTime.text = sunset
+                    currentTemp.text = "$dayOneFahrenheit°"
+                    cityName.text = apiObject.getString("city_name")
+                    dayDescription.text = apiObject.getJSONArray("data").getJSONObject(0).getJSONObject("weather").getString("description")
                 }
         )
         /* In case of error */
         { println("Something might have gone wrong.....") }
 
-        queue.add(currentWeather)
         queue.add(weeklyForecast)
     }
 
-    private fun String.toDate(dateFormat: String = "yyyy-MM-dd HH:mm", timeZone: TimeZone = TimeZone.getTimeZone("UTC")): Date {
+    @SuppressLint("SimpleDateFormat")
+    private fun getSunTime(s: String): String? {
         /*
-         * Function is used to format date for UTC to the local timezone
+         * getSunTime function takes a string which is UTC unix format and returns the
+         * time in the following format: HH:mm. It is used to get the sunrise and sunset time
+         * for the current date.
          */
-        val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
-        parser.timeZone = timeZone
-        return parser.parse(this)
-    }
-
-    private fun Date.formatTo(dateFormat: String, timeZone: TimeZone = TimeZone.getDefault()): String {
-        /*
-         * Function is used to format a timestamp to only show HH:mm this is used to showcase the
-         * sunrise and sunset
-         */
-        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
-        formatter.timeZone = timeZone
-        return formatter.format(this)
+        return try {
+            val simpleDateFormat = SimpleDateFormat("K:mm a")
+            val netDate = Date(s.toLong() * 1000)
+            simpleDateFormat.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
     }
 
 
