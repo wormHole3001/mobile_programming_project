@@ -7,44 +7,6 @@
     android:background="@drawable/weather_background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/cityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/cityName"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
-
-    <TextView
-        android:id="@+id/dayTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/temp"
-        android:textSize="56sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.239" />
-
-    <TextView
-        android:id="@+id/dayDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/day"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
-
     <ImageView
         android:id="@+id/sunriseIcon"
         android:layout_width="58dp"
@@ -95,128 +57,285 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TableLayout
-        android:id="@+id/weeklyForecast"
+    <LinearLayout
+        android:id="@+id/cityNameLayout"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.384">
+        tools:layout_editor_absoluteX="16dp">
 
-        <TableRow
-            android:id="@+id/dateForecast"
+        <TextView
+            android:id="@+id/cityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:text="@string/cityName"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weatherDescriptionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-16dp">
+
+        <TextView
+            android:id="@+id/dayDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/day"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/currentTempLayout"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/dayTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/temp"
+            android:textSize="56sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forecastLayout"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_marginTop="240dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp">
+
+        <LinearLayout
+            android:id="@+id/forecastDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/dayNow"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/now" />
 
             <TextView
                 android:id="@+id/dayTwo"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayTwoText" />
 
             <TextView
                 android:id="@+id/dayThree"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayThreeText" />
 
             <TextView
                 android:id="@+id/dayFour"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayFourText" />
 
             <TextView
                 android:id="@+id/dayFive"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayFiveText" />
 
             <TextView
                 android:id="@+id/daySix"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/daySixText" />
 
             <TextView
                 android:id="@+id/daySeven"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/daySevenText" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/dateTempForecast"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/nowTemp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:text="@string/daySevenText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/forecastDescription"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/nowIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/dayTwoIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/dayThreeIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/dayFourIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/dayFiveIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/daySixIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <View
+                android:id="@+id/daySevenIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/forecastTemp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nowTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/nowTempText" />
 
             <TextView
                 android:id="@+id/dayTwoTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayTwoTempText" />
 
             <TextView
                 android:id="@+id/dayThreeTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayThreeTempText" />
 
             <TextView
                 android:id="@+id/dayFourTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayFourTempText" />
 
             <TextView
                 android:id="@+id/dayFiveTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/dayFiveTempText" />
 
             <TextView
                 android:id="@+id/daySixTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/daySixTempText" />
 
             <TextView
                 android:id="@+id/daySevenTemp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/daySevenTempText" />
-        </TableRow>
 
-    </TableLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
