@@ -1,5 +1,25 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="cityName">Welcome!</string>
+    <string name="cityName">--</string>
     <string name="get_location_button">Get Location</string>
+    <string name="temp">--</string>
+    <string name="day">---</string>
+    <string name="sunrise">sunrise</string>
+    <string name="sunset">sunset</string>
+    <string name="sunset_time">--</string>
+    <string name="sunrise_time">--</string>
+    <string name="now">Now</string>
+    <string name="daySevenText">--</string>
+    <string name="daySixText">--</string>
+    <string name="dayFiveText">--</string>
+    <string name="dayFourText">--</string>
+    <string name="dayThreeText">--</string>
+    <string name="dayTwoText">--</string>
+    <string name="nowTempText">--</string>
+    <string name="dayTwoTempText">--</string>
+    <string name="dayThreeTempText">--</string>
+    <string name="dayFourTempText">--</string>
+    <string name="dayFiveTempText">--</string>
+    <string name="daySixTempText">--</string>
+    <string name="daySevenTempText">--</string>
 </resources>
