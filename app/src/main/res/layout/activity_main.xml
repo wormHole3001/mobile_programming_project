@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/weather_background"
+    android:background="@drawable/stars1"
     tools:context=".MainActivity">
 
     <ImageView
@@ -119,10 +119,10 @@
         android:id="@+id/forecastLayout"
         android:layout_width="match_parent"
         android:layout_height="136dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="380dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:id="@+id/forecastDate"
